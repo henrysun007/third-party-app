@@ -1,0 +1,506 @@
+unchanged:
+--- a/test/syscalls/linux/BUILD
++++ b/test/syscalls/linux/BUILD
+@@ -46,15 +46,6 @@ cc_binary(
+ )
+ 
+ cc_binary(
+-    name = "exec_basic_workload",
+-    testonly = 1,
+-    srcs = [
+-        "exec.h",
+-        "exec_basic_workload.cc",
+-    ],
+-)
+-
+-cc_binary(
+     name = "exec_proc_exe_workload",
+     testonly = 1,
+     srcs = ["exec_proc_exe_workload.cc"],
+@@ -313,22 +304,6 @@ cc_binary(
+ )
+ 
+ cc_binary(
+-    name = "alarm_test",
+-    testonly = 1,
+-    srcs = ["alarm.cc"],
+-    linkstatic = 1,
+-    deps = [
+-        "//test/util:file_descriptor",
+-        "@com_google_absl//absl/time",
+-        gtest,
+-        "//test/util:logging",
+-        "//test/util:signal_util",
+-        "//test/util:test_util",
+-        "//test/util:thread_util",
+-    ],
+-)
+-
+-cc_binary(
+     name = "bad_test",
+     testonly = 1,
+     srcs = ["bad.cc"],
+@@ -684,37 +659,6 @@ cc_binary(
+ )
+ 
+ cc_binary(
+-    name = "exec_test",
+-    testonly = 1,
+-    srcs = [
+-        "exec.cc",
+-        "exec.h",
+-    ],
+-    data = [
+-        ":exec_assert_closed_workload",
+-        ":exec_basic_workload",
+-        ":exec_proc_exe_workload",
+-        ":exec_state_workload",
+-        ":exit_script",
+-        ":priority_execve",
+-    ],
+-    linkstatic = 1,
+-    deps = [
+-        "//test/util:file_descriptor",
+-        "//test/util:fs_util",
+-        "@com_google_absl//absl/strings",
+-        "@com_google_absl//absl/synchronization",
+-        "@com_google_absl//absl/types:optional",
+-        gtest,
+-        "//test/util:multiprocess_util",
+-        "//test/util:posix_error",
+-        "//test/util:temp_path",
+-        "//test/util:test_util",
+-        "//test/util:thread_util",
+-    ],
+-)
+-
+-cc_binary(
+     name = "exit_test",
+     testonly = 1,
+     srcs = ["exit.cc"],
+@@ -772,31 +716,6 @@ cc_binary(
+ )
+ 
+ cc_binary(
+-    name = "fcntl_test",
+-    testonly = 1,
+-    srcs = ["fcntl.cc"],
+-    linkstatic = 1,
+-    deps = [
+-        ":socket_test_util",
+-        "//test/util:cleanup",
+-        "//test/util:eventfd_util",
+-        "//test/util:fs_util",
+-        "@com_google_absl//absl/base:core_headers",
+-        "@com_google_absl//absl/flags:flag",
+-        "@com_google_absl//absl/memory",
+-        "@com_google_absl//absl/strings",
+-        "@com_google_absl//absl/time",
+-        gtest,
+-        "//test/util:multiprocess_util",
+-        "//test/util:posix_error",
+-        "//test/util:save_util",
+-        "//test/util:temp_path",
+-        "//test/util:test_util",
+-        "//test/util:timer_util",
+-    ],
+-)
+-
+-cc_binary(
+     name = "flock_test",
+     testonly = 1,
+     srcs = [
+@@ -984,32 +903,6 @@ cc_binary(
+     ],
+ )
+ 
+-cc_library(
+-    name = "iptables_types",
+-    testonly = 1,
+-    hdrs = [
+-        "iptables.h",
+-    ],
+-)
+-
+-cc_binary(
+-    name = "iptables_test",
+-    testonly = 1,
+-    srcs = [
+-        "iptables.cc",
+-    ],
+-    linkstatic = 1,
+-    deps = [
+-        ":iptables_types",
+-        ":socket_test_util",
+-        "//test/util:capability_util",
+-        "//test/util:file_descriptor",
+-        gtest,
+-        "//test/util:test_main",
+-        "//test/util:test_util",
+-    ],
+-)
+-
+ cc_binary(
+     name = "itimer_test",
+     testonly = 1,
+@@ -1181,25 +1074,6 @@ cc_binary(
+ )
+ 
+ cc_binary(
+-    name = "mmap_test",
+-    testonly = 1,
+-    srcs = ["mmap.cc"],
+-    linkstatic = 1,
+-    deps = [
+-        "//test/util:cleanup",
+-        "//test/util:file_descriptor",
+-        "//test/util:fs_util",
+-        "@com_google_absl//absl/strings",
+-        gtest,
+-        "//test/util:memory_util",
+-        "//test/util:multiprocess_util",
+-        "//test/util:temp_path",
+-        "//test/util:test_main",
+-        "//test/util:test_util",
+-    ],
+-)
+-
+-cc_binary(
+     name = "mount_test",
+     testonly = 1,
+     srcs = ["mount.cc"],
+@@ -1309,42 +1183,6 @@ cc_binary(
+ )
+ 
+ cc_binary(
+-    name = "packet_socket_raw_test",
+-    testonly = 1,
+-    srcs = ["packet_socket_raw.cc"],
+-    linkstatic = 1,
+-    deps = [
+-        ":socket_test_util",
+-        ":unix_domain_socket_test_util",
+-        "//test/util:capability_util",
+-        "//test/util:file_descriptor",
+-        "@com_google_absl//absl/base:core_headers",
+-        "@com_google_absl//absl/base:endian",
+-        gtest,
+-        "//test/util:test_main",
+-        "//test/util:test_util",
+-    ],
+-)
+-
+-cc_binary(
+-    name = "packet_socket_test",
+-    testonly = 1,
+-    srcs = ["packet_socket.cc"],
+-    linkstatic = 1,
+-    deps = [
+-        ":socket_test_util",
+-        ":unix_domain_socket_test_util",
+-        "//test/util:capability_util",
+-        "//test/util:file_descriptor",
+-        "@com_google_absl//absl/base:core_headers",
+-        "@com_google_absl//absl/base:endian",
+-        gtest,
+-        "//test/util:test_main",
+-        "//test/util:test_util",
+-    ],
+-)
+-
+-cc_binary(
+     name = "pty_test",
+     testonly = 1,
+     srcs = ["pty.cc"],
+@@ -1704,25 +1542,6 @@ cc_binary(
+ )
+ 
+ cc_binary(
+-    name = "ptrace_test",
+-    testonly = 1,
+-    srcs = ["ptrace.cc"],
+-    linkstatic = 1,
+-    deps = [
+-        "@com_google_absl//absl/flags:flag",
+-        "@com_google_absl//absl/time",
+-        gtest,
+-        "//test/util:logging",
+-        "//test/util:multiprocess_util",
+-        "//test/util:platform_util",
+-        "//test/util:signal_util",
+-        "//test/util:test_util",
+-        "//test/util:thread_util",
+-        "//test/util:time_util",
+-    ],
+-)
+-
+-cc_binary(
+     name = "pwrite64_test",
+     testonly = 1,
+     srcs = ["pwrite64.cc"],
+@@ -1907,22 +1726,6 @@ cc_binary(
+ )
+ 
+ cc_binary(
+-    name = "rseq_test",
+-    testonly = 1,
+-    srcs = ["rseq.cc"],
+-    data = ["//test/syscalls/linux/rseq"],
+-    linkstatic = 1,
+-    deps = [
+-        "//test/syscalls/linux/rseq:lib",
+-        gtest,
+-        "//test/util:logging",
+-        "//test/util:multiprocess_util",
+-        "//test/util:test_main",
+-        "//test/util:test_util",
+-    ],
+-)
+-
+-cc_binary(
+     name = "rtsignal_test",
+     testonly = 1,
+     srcs = ["rtsignal.cc"],
+@@ -3405,25 +3208,6 @@ cc_binary(
+ )
+ 
+ cc_binary(
+-    name = "timers_test",
+-    testonly = 1,
+-    srcs = ["timers.cc"],
+-    linkstatic = 1,
+-    deps = [
+-        "//test/util:cleanup",
+-        "@com_google_absl//absl/flags:flag",
+-        "@com_google_absl//absl/time",
+-        gtest,
+-        "//test/util:logging",
+-        "//test/util:multiprocess_util",
+-        "//test/util:posix_error",
+-        "//test/util:signal_util",
+-        "//test/util:test_util",
+-        "//test/util:thread_util",
+-    ],
+-)
+-
+-cc_binary(
+     name = "tkill_test",
+     testonly = 1,
+     srcs = ["tkill.cc"],
+@@ -3486,38 +3270,6 @@ cc_binary(
+     ],
+ )
+ 
+-cc_library(
+-    name = "udp_socket_test_cases",
+-    testonly = 1,
+-    srcs = [
+-        "udp_socket_errqueue_test_case.cc",
+-        "udp_socket_test_cases.cc",
+-    ],
+-    hdrs = ["udp_socket_test_cases.h"],
+-    defines = select_system(),
+-    deps = [
+-        ":socket_test_util",
+-        ":unix_domain_socket_test_util",
+-        "@com_google_absl//absl/base:core_headers",
+-        "@com_google_absl//absl/time",
+-        gtest,
+-        "//test/util:test_main",
+-        "//test/util:test_util",
+-        "//test/util:thread_util",
+-    ],
+-    alwayslink = 1,
+-)
+-
+-cc_binary(
+-    name = "udp_socket_test",
+-    testonly = 1,
+-    srcs = ["udp_socket.cc"],
+-    linkstatic = 1,
+-    deps = [
+-        ":udp_socket_test_cases",
+-    ],
+-)
+-
+ cc_binary(
+     name = "udp_bind_test",
+     testonly = 1,
+@@ -3730,21 +3482,6 @@ cc_binary(
+ )
+ 
+ cc_binary(
+-    name = "shm_test",
+-    testonly = 1,
+-    srcs = ["shm.cc"],
+-    linkstatic = 1,
+-    deps = [
+-        "//test/util:multiprocess_util",
+-        "//test/util:posix_error",
+-        "//test/util:temp_path",
+-        "//test/util:test_main",
+-        "//test/util:test_util",
+-        "@com_google_absl//absl/time",
+-    ],
+-)
+-
+-cc_binary(
+     name = "fadvise64_test",
+     testonly = 1,
+     srcs = ["fadvise64.cc"],
+@@ -3848,25 +3585,3 @@ cc_binary(
+         "//test/util:test_util",
+     ],
+ )
+-
+-cc_binary(
+-    name = "xattr_test",
+-    testonly = 1,
+-    srcs = [
+-        "file_base.h",
+-        "xattr.cc",
+-    ],
+-    linkstatic = 1,
+-    deps = [
+-        "//test/util:capability_util",
+-        "//test/util:file_descriptor",
+-        "//test/util:fs_util",
+-        "@com_google_absl//absl/container:flat_hash_set",
+-        "@com_google_absl//absl/strings",
+-        gtest,
+-        "//test/util:posix_error",
+-        "//test/util:temp_path",
+-        "//test/util:test_main",
+-        "//test/util:test_util",
+-    ],
+-)
+only in patch2:
+unchanged:
+--- a/test/syscalls/BUILD
++++ b/test/syscalls/BUILD
+@@ -24,12 +24,6 @@ syscall_test(
+     test = "//test/syscalls/linux:aio_test",
+ )
+ 
+-syscall_test(
+-    size = "medium",
+-    shard_count = 5,
+-    test = "//test/syscalls/linux:alarm_test",
+-)
+-
+ syscall_test(test = "//test/syscalls/linux:arch_prctl_test")
+ 
+ syscall_test(test = "//test/syscalls/linux:bad_test")
+@@ -113,12 +107,6 @@ syscall_test(test = "//test/syscalls/linux:exceptions_test")
+ syscall_test(
+     size = "medium",
+     add_overlay = True,
+-    test = "//test/syscalls/linux:exec_test",
+-)
+-
+-syscall_test(
+-    size = "medium",
+-    add_overlay = True,
+     test = "//test/syscalls/linux:exec_binary_test",
+ )
+ 
+@@ -143,11 +131,6 @@ syscall_test(
+ 
+ syscall_test(
+     size = "medium",
+-    test = "//test/syscalls/linux:fcntl_test",
+-)
+-
+-syscall_test(
+-    size = "medium",
+     add_overlay = True,
+     test = "//test/syscalls/linux:flock_test",
+ )
+@@ -195,10 +178,6 @@ syscall_test(
+ )
+ 
+ syscall_test(
+-    test = "//test/syscalls/linux:iptables_test",
+-)
+-
+-syscall_test(
+     size = "large",
+     shard_count = 5,
+     test = "//test/syscalls/linux:itimer_test",
+@@ -236,12 +215,6 @@ syscall_test(
+ )
+ 
+ syscall_test(
+-    size = "medium",
+-    shard_count = 5,
+-    test = "//test/syscalls/linux:mmap_test",
+-)
+-
+-syscall_test(
+     add_overlay = True,
+     test = "//test/syscalls/linux:mount_test",
+ )
+@@ -270,10 +243,6 @@ syscall_test(
+     test = "//test/syscalls/linux:open_test",
+ )
+ 
+-syscall_test(test = "//test/syscalls/linux:packet_socket_raw_test")
+-
+-syscall_test(test = "//test/syscalls/linux:packet_socket_test")
+-
+ syscall_test(test = "//test/syscalls/linux:partial_bad_buffer_test")
+ 
+ syscall_test(test = "//test/syscalls/linux:pause_test")
+@@ -331,8 +300,6 @@ syscall_test(
+     test = "//test/syscalls/linux:pselect_test",
+ )
+ 
+-syscall_test(test = "//test/syscalls/linux:ptrace_test")
+-
+ syscall_test(
+     size = "medium",
+     shard_count = 5,
+@@ -389,8 +356,6 @@ syscall_test(
+ 
+ syscall_test(test = "//test/syscalls/linux:rlimits_test")
+ 
+-syscall_test(test = "//test/syscalls/linux:rseq_test")
+-
+ syscall_test(test = "//test/syscalls/linux:rtsignal_test")
+ 
+ syscall_test(test = "//test/syscalls/linux:signalfd_test")
+@@ -441,11 +406,6 @@ syscall_test(test = "//test/syscalls/linux:sigtimedwait_test")
+ 
+ syscall_test(
+     size = "medium",
+-    test = "//test/syscalls/linux:shm_test",
+-)
+-
+-syscall_test(
+-    size = "medium",
+     test = "//test/syscalls/linux:socket_abstract_non_blocking_test",
+ )
+ 
+@@ -671,8 +631,6 @@ syscall_test(test = "//test/syscalls/linux:tgkill_test")
+ 
+ syscall_test(test = "//test/syscalls/linux:timerfd_test")
+ 
+-syscall_test(test = "//test/syscalls/linux:timers_test")
+-
+ syscall_test(test = "//test/syscalls/linux:time_test")
+ 
+ syscall_test(test = "//test/syscalls/linux:tkill_test")
+@@ -691,13 +649,6 @@ syscall_test(
+ 
+ syscall_test(test = "//test/syscalls/linux:udp_bind_test")
+ 
+-syscall_test(
+-    size = "medium",
+-    add_hostinet = True,
+-    shard_count = 10,
+-    test = "//test/syscalls/linux:udp_socket_test",
+-)
+-
+ syscall_test(test = "//test/syscalls/linux:uidgid_test")
+ 
+ syscall_test(test = "//test/syscalls/linux:uname_test")

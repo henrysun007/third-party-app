@@ -1,0 +1,76 @@
+From b39aede7ee71cf727e1c24d75fc4740e4e04343f Mon Sep 17 00:00:00 2001
+From: He Sun <bochang.sh@antgroup.com>
+Date: Mon, 9 Nov 2020 12:33:07 +0800
+Subject: [PATCH] Remove the dependency on fork
+
+---
+ src/netserver.c | 41 +++--------------------------------------
+ 1 file changed, 3 insertions(+), 38 deletions(-)
+
+diff --git a/src/netserver.c b/src/netserver.c
+index 00c8d23..2eda747 100644
+--- a/src/netserver.c
++++ b/src/netserver.c
+@@ -1016,45 +1016,12 @@ spawn_child() {
+ 
+   signal(SIGCLD,SIG_IGN);
+ 
+-  switch (fork()) {
+-  case -1:
+-    fprintf(where,
+-	    "%s: fork() error %s (errno %d)\n",
+-	    __FUNCTION__,
+-	    strerror(errno),
+-	    errno);
+-    fflush(where);
+-    exit(1);
+-
+-  case 0:
+-    /* we are the child, but not of inetd.  we don't know if we are
+-       the child of a daemonized parent or not, so we still need to
+-       worry about the standard file descriptors. raj 2011-07-11 */
+-
+-    close_listens(listen_list);
+     open_debug_file();
+ 
+     child = 1;
+     netperf_daemon = 0;
+     process_requests();
+-    exit(0);
+-    break;
+-
+-  default:
+-    /* we are the parent, not a great deal to do here, but we may
+-       want to reap some children */
+-#if !defined(HAVE_SETSID)
+-    /* Only call "waitpid()" if "setsid()" is not used. */
+-    while(waitpid(-1, NULL, WNOHANG) > 0) {
+-      if (debug) {
+-	fprintf(where,
+-		"%s: reaped a child process\n",
+-		__FUNCTION__);
+-      }
+-    }
+-#endif
+-    break;
+-  }
++    child = 0;
+ 
+ #elif defined(WIN32)
+ 
+@@ -1561,10 +1528,8 @@ main(int argc, char *argv[]) {
+     /* we are the top netserver process, so we have to create the
+        listen endpoint(s) and decide if we want to daemonize */
+     setup_listens(local_host_name,listen_port,local_address_family);
+-    if (want_daemonize) {
+-      daemonize();
+-    }
+-    accept_connections();
++    while(2)
++        accept_connections();
+   }
+ 
+   unlink_empty_debug_file();
+-- 
+2.17.1
+
