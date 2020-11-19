@@ -1,0 +1,3 @@
+[submodule "netperf/netperf"]
+	path = netperf/netperf
+	url = https://github.com/HewlettPackard/netperf.git
