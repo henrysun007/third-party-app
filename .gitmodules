@@ -1,3 +1,6 @@
 [submodule "netperf/netperf"]
 	path = netperf/netperf
 	url = https://github.com/HewlettPackard/netperf.git
+[submodule "gvisor/gvisor"]
+	path = gvisor/gvisor
+	url = https://github.com/google/gvisor.git
